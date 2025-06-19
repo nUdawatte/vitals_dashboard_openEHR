@@ -93,23 +93,29 @@
 
 	async function getVitals() {
 		try {
-			const response = await fetch(`${openehrBaseUrl}/query/aql`, {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					q: `SELECT c/uid/value, c/context/start_time/value,
-					o/data[at0002]/events[at0003]/data[at0001]/items[at0004.1]/value/magnitude,
-					o2/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
-					o2/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude,
-					o3/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value/numerator
-					FROM EHR e CONTAINS COMPOSITION c CONTAINS (
-					OBSERVATION o[openEHR-EHR-OBSERVATION.heartbeat-pulse.v0] AND
-					OBSERVATION o2[openEHR-EHR-OBSERVATION.blood_pressure.v2] AND
-					OBSERVATION o3[openEHR-EHR-OBSERVATION.pulse_oximetry.v1])
-					WHERE c/archetype_details/template_id/value = '${localwebtemplate.templateId}' AND e/ehr_id/value = '${ehrId}'`
-				})
-			});
-
+            const response = await fetch(`${openehrBaseUrl}/query/aql`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                q: `SELECT 
+                    c/uid/value, 
+                    c/context/start_time/value,
+                    o/data[at0002]/events[at0003]/data[at0001]/items[at0004.1]/value/magnitude,
+                    o2/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
+                    o2/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude,
+                    o3/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value/numerator,
+                    o4/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude
+                FROM EHR e CONTAINS COMPOSITION c CONTAINS (
+                    OBSERVATION o[openEHR-EHR-OBSERVATION.heartbeat-pulse.v0] AND
+                    OBSERVATION o2[openEHR-EHR-OBSERVATION.blood_pressure.v2] AND
+                    OBSERVATION o3[openEHR-EHR-OBSERVATION.pulse_oximetry.v1] AND
+                    OBSERVATION o4[openEHR-EHR-OBSERVATION.body_weight.v2]
+                )
+                WHERE c/archetype_details/template_id/value = '${localwebtemplate.templateId}' 
+                    AND e/ehr_id/value = '${ehrId}'`
+            })
+            });
+ 
 			if (response.ok) {
 				const data = await response.json();
 				return data.rows.map((row: any) => ({
@@ -244,9 +250,9 @@
 		{:else}
 			<p class="text-gray-500">📭 No entries match the filter.</p>
 		{/if}
-		<button class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2" on:click={cancelEdit} title="New Vitals Entry">
+		<!-- <button class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2" on:click={cancelEdit} title="New Vitals Entry">
 			<i class="fas fa-plus"></i> New Entry
-		</button>
+		</button> -->
 	</div>
 </div>
 

@@ -31,6 +31,11 @@
 		}, 0);
 	}
 
+	// Refresh chart when weight unit changes and selected vital is weight
+	$: if (selectedVital === 'body_weight' && weightUnit) {
+		tick().then(updateChart);
+	}
+
 	function convertWeight(value: number, fromUnit: string, toUnit: string): number {
 		if (fromUnit === toUnit) return value;
 		let valueInKg = value;
@@ -251,6 +256,7 @@
 
 
 
+
 <!-- HTML UI BLOCK -->
 <div class="p-6 bg-gradient-to-br from-sky-50 to-white min-h-screen space-y-8">
     <!-- Header -->
@@ -300,7 +306,7 @@
             bind:value={weightUnit}
           >
             <option value="kg">Kilograms (kg)</option>
-            <option value="g">Grams (g)</option>
+            <!-- <option value="g">Grams (g)</option> -->
             <option value="lb">Pounds (lb)</option>
           </select>
         </div>
