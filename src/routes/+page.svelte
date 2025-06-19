@@ -104,12 +104,14 @@
                     o2/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude,
                     o2/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude,
                     o3/data[at0001]/events[at0002]/data[at0003]/items[at0006]/value/numerator,
-                    o4/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude
+                    o4/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude,
+                    o5/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/magnitude
                 FROM EHR e CONTAINS COMPOSITION c CONTAINS (
                     OBSERVATION o[openEHR-EHR-OBSERVATION.heartbeat-pulse.v0] AND
                     OBSERVATION o2[openEHR-EHR-OBSERVATION.blood_pressure.v2] AND
                     OBSERVATION o3[openEHR-EHR-OBSERVATION.pulse_oximetry.v1] AND
-                    OBSERVATION o4[openEHR-EHR-OBSERVATION.body_weight.v2]
+                    OBSERVATION o4[openEHR-EHR-OBSERVATION.body_weight.v2] AND
+                    OBSERVATION o5[openEHR-EHR-OBSERVATION.height.v2]
                 )
                 WHERE c/archetype_details/template_id/value = '${localwebtemplate.templateId}' 
                     AND e/ehr_id/value = '${ehrId}'`
@@ -119,7 +121,7 @@
 			if (response.ok) {
 				const data = await response.json();
 				return data.rows.map((row: any) => ({
-					uid: row[0], start_time: row[1], pulse: row[2], systolic: row[3], diastolic: row[4], spo2: row[5]
+					uid: row[0], start_time: row[1], pulse: row[2], systolic: row[3], diastolic: row[4], spo2: row[5], weight: row[6], height: row[7]
 				}));
 			}
 		} catch (err) {
@@ -207,7 +209,8 @@
 	</div>
 
 	<!-- Entries Section -->
-	<div class="xl:w-1/2 p-8 bg-gradient-to-br from-sky-50 to-white overflow-y-auto relative">
+    <div class="xl:w-1/2 p-8 bg-gradient-to-br from-sky-50 to-white relative max-h-[80vh] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-blue-100">
+
 		<h2 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2">
 			<i class="fas fa-notes-medical"></i> Previous Entries
 		</h2>
@@ -239,6 +242,8 @@
 							<div>💓 Pulse: {vital.pulse ?? "N/A"} /min</div>
 							<div>🩺 BP: {vital.systolic ?? "?"}/{vital.diastolic ?? "?"} mmHg</div>
 							<div>🩸 SpO₂: {vital.spo2 ?? "N/A"}%</div>
+                            <div>⚖️  weight: {vital.weight ?? "N/A"}kg</div>
+                            <div>📏  height: {vital.height ?? "N/A"}cm</div>
 						</div>
 						<div class="mt-3 flex gap-4">
 							<button class="text-sm text-blue-600 hover:underline" on:click={() => bindVitals(vital.uid)}>✏️ Edit</button>
@@ -250,9 +255,6 @@
 		{:else}
 			<p class="text-gray-500">📭 No entries match the filter.</p>
 		{/if}
-		<!-- <button class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-full shadow-xl flex items-center gap-2" on:click={cancelEdit} title="New Vitals Entry">
-			<i class="fas fa-plus"></i> New Entry
-		</button> -->
 	</div>
 </div>
 

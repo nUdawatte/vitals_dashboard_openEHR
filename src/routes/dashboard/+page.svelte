@@ -16,7 +16,6 @@
 	let chart: Chart;
 	let weightUnit: 'kg' | 'g' | 'lb' = 'kg';
 
-	// Title reactive
 	$: chartTitle =
 		selectedVital === 'blood_pressure' ? 'Blood Pressure' :
 		selectedVital === 'spo2' ? 'SpO₂' :
@@ -24,14 +23,12 @@
 		selectedVital === 'body_weight' ? 'Body Weight' :
 		selectedVital === 'height' ? 'Height' : 'Vital';
 
-	// Trigger refresh reactively
 	$: if (selectedVital || activeView) {
 		setTimeout(() => {
 			loadVitals();
 		}, 0);
 	}
 
-	// Refresh chart when weight unit changes and selected vital is weight
 	$: if (selectedVital === 'body_weight' && weightUnit) {
 		tick().then(updateChart);
 	}
@@ -261,7 +258,7 @@
 <div class="p-6 bg-gradient-to-br from-sky-50 to-white min-h-screen space-y-8">
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-      <h1 class="text-3xl font-bold text-sky-700">📈 Vitals Overview</h1>
+      <h1 class="text-3xl font-bold text-sky-700">📈 Vitals Dashboard</h1>
       <button class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 shadow" on:click={() => goto('/')}>
         <i class="fas fa-clipboard-list"></i> Back to Form
       </button>
@@ -306,8 +303,7 @@
             bind:value={weightUnit}
           >
             <option value="kg">Kilograms (kg)</option>
-            <!-- <option value="g">Grams (g)</option> -->
-            <option value="lb">Pounds (lb)</option>
+             <option value="lb">Pounds (lb)</option>
           </select>
         </div>
       {/if}
@@ -370,10 +366,10 @@
           <canvas bind:this={chartCanvas} class="w-full h-full"></canvas>
         </div>
   
-        <div class="bg-white rounded-2xl p-6 shadow-xl overflow-auto">
+        <div class="bg-white rounded-2xl p-6 shadow-xl max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-blue-100">
           <h2 class="text-lg font-semibold text-gray-800 mb-4">📋 Detailed Records</h2>
           <table class="min-w-full text-sm border-separate border-spacing-y-2">
-            <thead class="bg-blue-100 text-blue-800">
+            <thead class="bg-blue-100 text-blue-800 sticky top-0 z-10">
               <tr>
                 <th class="p-3 text-left">🧾 Template</th>
                 <th class="p-3 text-left">⏰ Time</th>
@@ -393,7 +389,10 @@
             </thead>
             <tbody>
               {#each data as row}
-                <tr class="bg-gray-50 hover:bg-blue-50 rounded-lg">
+                <tr
+                    class="bg-gray-50 hover:bg-blue-100 rounded-lg transition-colors duration-200 cursor-pointer"
+                    title={`Recorded on ${new Date(row.timestamp).toLocaleString()}`}
+                  >                 
                   <td class="p-3">{row.template_id}</td>
                   <td class="p-3">{new Date(row.timestamp).toLocaleString()}</td>
                   {#if selectedVital === 'blood_pressure'}

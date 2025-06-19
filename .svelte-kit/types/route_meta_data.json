@@ -1,0 +1,6 @@
+{
+	"/": [
+		"src/routes/+page.server.js"
+	],
+	"/dashboard": []
+}

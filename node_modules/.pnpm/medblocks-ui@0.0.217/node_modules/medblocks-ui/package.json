@@ -1,0 +1,107 @@
+{
+  "name": "medblocks-ui",
+  "version": "0.0.217",
+  "description": "Web components for building healthcare interfaces",
+  "author": "Sidharth Ramesh",
+  "license": "Apache-2.0",
+  "main": "dist/medblocks.js",
+  "module": "dist/medblocks.js",
+  "types": "dist/medblocks.d.ts",
+  "files": [
+    "dist/medblocks.js",
+    "dist/medblocks.d.ts",
+    "dist/styles.js",
+    "dist/styles.d.ts",
+    "dist/shoelace.js",
+    "dist/shoelace.d.ts",
+    "vscode-custom-data.json",
+    "dist/src",
+    "dist/utils.js",
+    "dist/utils.d.ts",
+    "dist/bundle.js"
+  ],
+  "scripts": {
+    "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
+    "build": "tsc && npm run bundle",
+    "prepublish": "npm run build",
+    "release": "npm run test && standard-version -a && git push --follow-tags origin master",
+    "bundle": "esbuild medblocks.ts --bundle --outfile=dist/bundle.js",
+    "postrelease": "git push --follow-tags origin master",
+    "docs": "wca analyze src --format md --outDir ./documentation/",
+    "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
+    "format": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
+    "test": "tsc && wtr",
+    "test:watch": "tsc && concurrently -k -r \"tsc --watch \" \"wtr --watch\"",
+    "validate-quantity": "tsc && wtr ./dist/test/validation-test/search-validation.test.js"
+  },
+  "dependencies": {
+    "@shoelace-style/shoelace": "2.0.0-beta.71",
+    "axios": "^1.7.8",
+    "chai": "^4.3.10",
+    "lit-element": "^2.5.1",
+    "lit-html": "^1.4.1",
+    "query-selector-shadow-dom": "^1.0.1"
+  },
+  "devDependencies": {
+    "@open-wc/eslint-config": "^4.3.0",
+    "@open-wc/testing": "^4.0.0",
+    "@open-wc/testing-helpers": "^3.0.0",
+    "@types/chai-as-promised": "^7.1.8",
+    "@types/jest": "^29.5.8",
+    "@types/node": "^20.9.1",
+    "@types/query-selector-shadow-dom": "^1.0.4",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "@web/dev-server": "^0.4.6",
+    "@web/test-runner": "^0.19.0",
+    "@web/test-runner-puppeteer": "^0.17.0",
+    "chai-as-promised": "^7.1.1",
+    "concurrently": "^5.3.0",
+    "esbuild": "^0.13.15",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^7.2.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "prettier": "^2.8.8",
+    "standard-version": "^9.5.0",
+    "tslib": "^2.6.2",
+    "typescript": "^4.9.5",
+    "web-component-analyzer": "^1.1.7"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "@open-wc/eslint-config",
+      "eslint-config-prettier"
+    ],
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "rules": {
+      "no-unused-vars": "off",
+      "no-param-reassign": "off",
+      "no-undef": "off",
+      "no-plusplus": "off",
+      "no-loop-func": "off",
+      "no-use-before-define": "off",
+      "consistent-return": "warn",
+      "class-methods-use-this": "warn",
+      "func-names": "warn",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "import/no-unresolved": "off",
+      "import/extensions": [
+        "off",
+        {
+          "ignorePackages": true
+        }
+      ],
+      "import/no-duplicates": [
+        "off"
+      ]
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid"
+  }
+}

@@ -55,3 +55,38 @@ body {
   margin-right: 0.5rem;
   color: #2563eb;
 }
+
+
+/* Smooth custom scrollbar for all browsers */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #e0f2fe;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #60a5fa;
+    border-radius: 8px;
+  }
+  
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #60a5fa #e0f2fe;
+  }
+  
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #e0f2fe;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #60a5fa;
+    border-radius: 8px;
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #60a5fa #e0f2fe;
+  }
+  
