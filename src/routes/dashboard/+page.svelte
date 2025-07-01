@@ -283,7 +283,7 @@
                 <option value="spo2">🩸 SpO₂</option>
                 <option value="heart_rate">❤️ Heart Rate</option>
                 <option value="body_weight">⚖️ Body Weight</option>
-                <option value="height">📏 Height</option>
+                <option value="height">🧍‍♂️ Height</option>
                 </select>
                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20">
@@ -383,7 +383,7 @@
                 {:else if selectedVital === 'body_weight'}
                   <th class="p-3 text-left">⚖️ Weight ({weightUnit})</th>
                 {:else if selectedVital === 'height'}
-                  <th class="p-3 text-left">📏 Height (cm)</th>
+                  <th class="p-3 text-left">🧍‍♂️ Height (cm)</th>
                 {/if}
               </tr>
             </thead>

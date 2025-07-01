@@ -243,7 +243,7 @@
 							<div>🩺 BP: {vital.systolic ?? "?"}/{vital.diastolic ?? "?"} mmHg</div>
 							<div>🩸 SpO₂: {vital.spo2 ?? "N/A"}%</div>
                             <div>⚖️  weight: {vital.weight ?? "N/A"}kg</div>
-                            <div>📏  height: {vital.height ?? "N/A"}cm</div>
+                            <div>🧍‍♂️  height: {vital.height ?? "N/A"}cm</div>
 						</div>
 						<div class="mt-3 flex gap-4">
 							<button class="text-sm text-blue-600 hover:underline" on:click={() => bindVitals(vital.uid)}>✏️ Edit</button>

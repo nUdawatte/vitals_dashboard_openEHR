@@ -1,4 +1,24 @@
+node_modules/
+# Node.js dependencies
+dist/
+# Build output directory
+build/
+# Temporary files and directories
+tmp/
+temp/
+# Logs
+logs/
+*.log
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local           
+
 # Package manager logs (safe to ignore, useful for debugging only)
+
+
 npm-debug.log*
 pnpm-debug.log*
 yarn-debug.log*
@@ -22,3 +42,11 @@ coverage/
 *.log
 test-results/
 tmp/
+
+
+/.svelte-kit
+# SvelteKit build artifacts
+.svelte-kit/output/
+# SvelteKit cache
+.svelte-kit/cache/
+# SvelteKit build artifacts 
